@@ -14,21 +14,26 @@
 </head>
 
 <body>
-    <header>
-        <h1>Hello, world!</h1>
-    </header>
+  <header class="hero">
+    <h1 class="app-title"><i class="fab fa-github"></i> Git it Done!</h1>
+    <p>Search for a GitHub user or click on a language to see a list of repositories and how many open issues they have!
+    </p>
+  </header>
 
-    <main>
-        <div class="main-container grid">
-            <div class="m-5 row justify-content-around">
-                <div id="location" class="col container">
-                    1 of 3
-                </div>
-                <div id="weather" class="col-9 container">
-                    2 of 2 (wider)
-                </div>
-            </div>
+    <main class="flex-row justify-space-between">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <h3 class="card-header text-uppercase">Search By User</h3>
+          <form id="user-form" class="card-body">
+            <label class="form-label" for="username">Username</label>
+            <input name="username" id="username" type="text" autofocus="true" class="form-input" />
+            <button type="submit" class="btn">Get User</button>
+          </form>
         </div>
+      </div>
+    
+      <div class="col-12 col-md-8"></div>
+    
 
         <!-- //* Card Decks -->
         <!-- <div class="card-deck">
