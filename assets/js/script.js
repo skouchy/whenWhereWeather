@@ -1,23 +1,40 @@
-// var userFormEl = document.querySelector("#user-form");
-// var nameInputEl = document.querySelector("#username");
+let apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}";
+const locationInputEl = document.querySelector("#location-input");
+const citySearchBtn = document.querySelector('.btn');
+let cityInput;
 
-// var formSubmitHandler = function (event) {
-//   event.preventDefault();
-//   // get value from input element
-//   var username = nameInputEl.value.trim();
 
-//   if (username) {
-//     getUserRepos(username);
-//     nameInputEl.value = "";
-//   } else {
-//     alert("Please enter a GitHub username");
-//   }
-//   console.log(event);
-// };
+let formSubmitHandler = function (event) {
+    event.preventDefault();
+    // get value from input element
+    cityInput = locationInputEl.value.trim();
 
-// var getUserRepos = function (user) {
+    if (cityInput) {
+        //     locationInputEl.value = "";
+        addCity();
+    } else {
+        alert("Please enter a valid City");
+    }
+};
+
+// creating list items dynamically
+let addCity = function (append) {
+    let cityWeatherLink = $('<a>').attr('href', apiUrl);
+
+    cityWeatherLink.addClass("list-group-item list-group-item-action list-group-item-secondary");
+
+    let cityText = $("<span>")
+        .addClass('m-1')
+        .text(cityInput);
+
+    cityWeatherLink.append(cityText);
+
+    // append new city to div#city-list in html
+    $("#city-list").append(cityWeatherLink);
+};
+
+// let getCityWeather = function (user) {
 //   // format the github api url
-//   var apiUrl = "https://api.github.com/users/" + user + "/repos";
 
 //   // make a request to the url
 //   fetch(apiUrl).then(function (response) {
@@ -27,49 +44,33 @@
 //   });
 // };
 
-// userFormEl.addEventListener("submit", formSubmitHandler);
+// citySearchFormEl.addEventListener("submit", formSubmitHandler);
 
 // *FETCH 
-// var getUserRepos = function () {
+// let getCityWeather = function () {
 //     // fetch("https://api.github.com/users/octocat/repos");
-//     // var response = fetch("https://api.github.com/users/octocat/repos");
+//     // let response = fetch("https://api.github.com/users/octocat/repos");
 //     // console.log(response);
-  
+
 //     fetch("https://api.github.com/users/octocat/repos").then(function(response) {
 //       response.json().then(function(data) {
 //         console.log(data);
 //       });
 //     });
 //   }
-//   userFormEl.addEventListener("submit", formSubmitHandler);
+//   citySearchFormEl.addEventListener("submit", formSubmitHandler);
 
-// *creating list items dynamically
-// var createTask = function(taskText, taskDate, taskList) {
-//     // create elements that make up a task item
-//     var taskLi = $("<li>").addClass("list-group-item");
-  
-//     var taskSpan = $("<span>")
-//       .addClass("badge badge-primary badge-pill")
-//       .text(taskDate);
-  
-//     var taskP = $("<p>")
-//       .addClass("m-1")
-//       .text(taskText);
-  
-//     // append span and p element to parent li
-//     taskLi.append(taskSpan, taskP);
-  
-  
-//     // append to ul list on the page
-//     $("#list-" + taskList).append(taskLi);
-//   };
+//   <li class="list-group-item">An item</li>
+/* <span class="badge bg-secondary">New</span> */
+{/* <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">A simple secondary list group item</a> */ }
+
 
 //* creating dynamic elements
-// var text = $(this)
+// let text = $(this)
 //  .text()
 //  .trim();
 
-//  var textInput = $("<textarea>")
+//  let textInput = $("<textarea>")
 //   .addClass("form-control")
 //   .val(text);
 
@@ -86,16 +87,16 @@
 //==============================================
 // * LOCALSTORAGE
 
-// var saveTasks = function() {
-//     localStorage.setItem("tasks", JSON.stringify(tasks));
+// let saveCities = function() {
+//     localStorage.setItem("cities", JSON.stringify(cities));
 //   };
 
-//   var loadTasks = function() {
-//     tasks = JSON.parse(localStorage.getItem("tasks"));
-  
+//   let loadCities = function() {
+//     cities = JSON.parse(localStorage.getItem("cities"));
+
 //     // if nothing in localStorage, create a new object to track all task status arrays
-//     if (!tasks) {
-//       tasks = {
+//     if (!cities) {
+//       cities = {
 //         inProgress: [],
 //         inReview: [],
 //         done: []
@@ -106,8 +107,4 @@
 //===============================================
 // * EVENT LISTENER
 
-// document.querySelector("#wrapper").addEventListener("click", function(event) {
-//     if (event.target.matches(".task")) {
-//       console.log("dynamic task was clicked");
-//     }
-//    });
+citySearchBtn.addEventListener("click", formSubmitHandler);
