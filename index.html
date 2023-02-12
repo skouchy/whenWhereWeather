@@ -19,26 +19,27 @@
   </header>
 
   <main class="flex-row justify-space-between">
-    <div class="grid col-12 col-md-4 gap-2">
+    <div class="grid col-md-5 gap-2">
       <div class="card">
         <h3 class="card-header text-uppercase">Search for a City:</h3>
         <form id="location-form" class="card-body">
-          <div class="row gap-2">
+          <div class="form-input">
             <label class="form-label" for="location">Location</label>
             <input name="location" id="location-input" type="text" autofocus="true" class="form-input form-control"
               placeholder="Denver, CO"/>
           </div>
-          <!-- <br> -->
-          <div class="col-8 mx-auto">
+
+          <div class="col-6 mx-auto">
             <button type="submit" class="m-3 btn btn-info text-nowrap" role="search">Got Weather?</button>
           </div>
         </form>
+        <div  class="list-group">
+          <ul id="city-list" class="list-group list-group-flush"></ul>
+        </div>
       </div>
+      <div id="render-weather" class="rows"></div>
     </div>
 
-    <div id="city-list" class="col-12 col-md-8">
-      <!-- <ul class="list-group list-group-flush"></ul> -->
-    </div>
 
 
     <!-- //* Card Decks -->

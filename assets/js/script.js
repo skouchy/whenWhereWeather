@@ -1,53 +1,155 @@
-let apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}";
 const locationInputEl = document.querySelector("#location-input");
+const cityListEl = document.getElementById('city-list');
 const citySearchBtn = document.querySelector('.btn');
+
+const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
+
 let cityInput;
+let lon;
+let lat;
 
 
-let formSubmitHandler = function (event) {
+let formSubmitHandler = function (event, cityInput) {
     event.preventDefault();
     // get value from input element
     cityInput = locationInputEl.value.trim();
 
     if (cityInput) {
         //     locationInputEl.value = "";
-        addCity();
+        // addCity(cityInput);
+        getCurrentWeather(cityInput);
+        console.log(cityInput + " : form handled!")
     } else {
         alert("Please enter a valid City");
     }
+    return cityInput;
 };
 
-// creating list items dynamically
-let addCity = function (append) {
-    let cityWeatherLink = $('<a>').attr('href', apiUrl);
-
-    cityWeatherLink.addClass("list-group-item list-group-item-action list-group-item-secondary");
-
-    let cityText = $("<span>")
-        .addClass('m-1')
-        .text(cityInput);
-
-    cityWeatherLink.append(cityText);
-
-    // append new city to div#city-list in html
-    $("#city-list").append(cityWeatherLink);
-};
-
-// let getCityWeather = function (user) {
-//   // format the github api url
-
-//   // make a request to the url
-//   fetch(apiUrl).then(function (response) {
-//     response.json().then(function (data) {
-//       console.log(data);
-//     });
-//   });
-// };
-
-// citySearchFormEl.addEventListener("submit", formSubmitHandler);
 
 // *FETCH 
-// let getCityWeather = function () {
+function getForecast(lat, lon) {
+    let fiveDayUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+    console.log('lat : ' + lat,'lon : ' + lon);
+    fetch(fiveDayUrl).then(function (response) {
+        console.log(response);
+        response.json().then(function (data) {
+            console.log(data);
+        })
+    })
+}
+
+// function getCurrentWeather(cityInput) {
+//     console.log(cityInput);
+// creating list items dynamically
+// function addCity(cityInput) {
+//     console.log(cityInput);
+//     getCurrentWeather();
+//     let cityWeatherLink = $('<a>').attr('href', getCurrentWeather);
+
+//     cityWeatherLink.addClass("list-group-item list-group-item-action list-group-item-secondary");
+
+//     let listCity = $("<span>")
+//         .addClass('m-1')
+//         .text(cityInput);
+
+//     cityWeatherLink.append(listCity);
+
+//     // append new city to div#city-list in html
+//     $("#city-list").append(cityWeatherLink);
+//     return cityInput;
+// };
+function getCurrentWeather(cityInput, lat, lon) {
+    let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey;
+
+    fetch(currentWeatherUrl)
+        .then(function (response) {
+            console.log(response);
+            if (response.ok) {
+                response.json().then(function (data) {
+                    lat = data.city.coord.lat;
+                    lon = data.city.coord.lon;
+                    
+                    // console.log(lat);
+                    // console.log(lon);
+                    return getForecast(lat, lon);  
+                    // for (let i = 0; i < data.length; i++) {
+                    //     //create a list element
+                    //     let cityListItem = $('<li>');
+                    //     cityListItem.textContent = data[i].html_url;
+                        // .attr('href', getCurrentWeather);
+
+                        // cityListItem.addClass("list-group-item list-group-item-action list-group-item-secondary");
+
+                        // let listCity = $("<span>")
+                        // .addClass('m-1')
+                        // .text(cityInput);
+
+                        // cityListItem.append(listCity);
+
+                        // // append new city to div#city-list in html
+                        // cityListEl.append(cityListItem);
+                        // // return cityInput;
+                    })
+                
+            } else {
+                alert('dis sum bullshit');
+            }
+        })
+};
+// response.json().then(function (data) {
+//     console.log(data.response);
+// })
+//     })
+// }
+// **let getCurrentWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + apiKey;
+// let displayWeatherEl = document.getElementById('render-weather');
+
+// fetch(getCurrentWeather)
+// .then(function(response){
+//     //convert to JSON object
+//     return response.json();
+// })
+// .then(function(data) {
+//     //display in HTML here
+//     let cityArray = data.response.city;
+//     for (let index = 0; index < cityArray.length; index++) {
+//         let listItem = document.createElement('li');
+//         listItem.textContent = docArray[index].weather;
+//         listEl.appendChild(listItem);
+//     }
+// })
+// .catch(function(error){
+//     //in case there is an error
+//     console.log(error);
+//** */ });
+
+
+// function statusErr(badRequestUrl) {
+//     fetch(badRequestUrl).then(function (response) {
+//         if (response.status !== 200) {
+//             // document.location.replace('./404.html')
+//             console.log(response.status)
+//         } else {
+//             return response.json();
+
+//         }
+//     });
+// }
+// function getCityWeather(cityInput) {
+//     let geoCodeUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+
+//     fetch(geoCodeUrl).then(function(response){
+//     response.json().then(function(data){
+//         console.log(data);
+//     })    
+// });
+// }
+
+//     });   
+// }
+
+//ORRRRR
+
 //     // fetch("https://api.github.com/users/octocat/repos");
 //     // let response = fetch("https://api.github.com/users/octocat/repos");
 //     // console.log(response);
@@ -107,4 +209,6 @@ let addCity = function (append) {
 //===============================================
 // * EVENT LISTENER
 
+// render(locationInputEl.attr(placeholder));
 citySearchBtn.addEventListener("click", formSubmitHandler);
+
