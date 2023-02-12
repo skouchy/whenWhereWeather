@@ -62,14 +62,14 @@ function addCity(cityInput) {
 };
 
 function getCurrentWeather(cityInput, lat, lon) {
-    let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey;
+    let currentWeatherUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&appid=" + apiKey;
     fetch(currentWeatherUrl)
         .then(function (response) {
             console.log(response);
             if (response.ok) {
                 response.json().then(function (data) {
-                    lat = data.city.coord.lat;
-                    lon = data.city.coord.lon;
+                    lat = data[0].lat;
+                    lon = data[0].lon;
                     
                     // console.log(lat);
                     // console.log(lon);
