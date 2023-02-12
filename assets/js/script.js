@@ -1,6 +1,7 @@
 const locationInputEl = document.querySelector("#location-input");
 const cityListEl = document.getElementById('city-list');
 const citySearchBtn = document.querySelector('.btn');
+let displayWeatherEl = document.getElementById('current-weather');
 
 let cityInput;
 let lon;
@@ -10,39 +11,89 @@ const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
 let currentWeatherUrl;
 
 
-function displayWeather(cityArray, cityName) {
-    let displayWeatherEl = document.getElementById('current-weather');
-
-    console.log('cityArray');
-    console.log(cityArray);
-
-    let cityTitle = document.createElement('div');
+function displayWeather(cityName, cityArray) {
     let cityHeader = document.createElement('h2');
     cityHeader.textContent = cityName;
-
-    cityTitle.appendChild(cityHeader);
-    displayWeatherEl.appendChild(cityTitle);
+    displayWeatherEl.append(cityHeader);
     
-
+    let renderTodayDate = document.getElementById('date');
+    let renderIcon = document.querySelector('.icon');
+    let renderTodayTemp = document.getElementById('temp');
+    let renderTodayHumid = document.getElementById('humidity');
+    let renderTodayWind = document.getElementById('wind-speed');
+    
+    
     for (let i = 0; i < cityArray.length; i += 7) {
-        
+        let weatherObj = {
+            date: cityArray[i].dt_txt.split(' ')[0],
+            icon: cityArray[i].weather[0].icon,
+            temp: cityArray[i].main.temp,
+            humid: cityArray[i].main.humidity,
+            wind: cityArray[i].wind.speed,
             
-        console.log(cityArray[i]);
-        // let dailyWeather = document.createElement('div');
-        // // listItem.textContent = docArray[index].weather;
-        // displayWeatherEl.appendChild(dailyWeather);
-        // console.log(forecastResponse[index]);
+        }
+        // return weatherObj;
+        renderTodayDate.innerHTML = weatherObj.date;
+        renderTodayTemp.innerHTML = weatherObj.temp;
+        renderTodayHumid.innerHTML = weatherObj.humid;
+        renderTodayWind.innerHTML = weatherObj.wind;
+        
+        // getIcon(weatherObj.icon)
+        return
     }
+    
+};
+// weatherObj.icon = 
 
-    // fetch(getCurrentWeather)
-    // .then(function(response){
-    //     //convert to JSON object
-    //     return response.json();
-    // })
-    // .then(function(data) {
-    //     //display in HTML here
 
-}
+// function getIcon(weatherObj) {
+//     let iconUrl = "https://openweathermap.org/img/wn/" + weatherObj.icon + "@2x.png";
+//     fetch(iconUrl)
+//         .then(function (response) {
+//             // if (!response.ok) {
+//             //     alert("dang, no cartoons");
+//             //     throw response.json();
+//             // }
+//             console.log(response);
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             console.log(data);
+
+//         })
+// };
+
+// let formatDate = date[1] + "/" + date[2] + "/" + date[0];
+
+// date[0] = renderTodayDate.innerHTML;
+// // dailyContent.appendChild(formatDate);
+
+
+// let temp = ;
+// temp.textContent = dailyText.innerHTML;
+// dailyContent.appendChild(dailyText);
+// console.log(dailyContent + 'p2');
+// dailyText.textContent.appendSibling()
+
+
+// console.log(date);
+
+// let dailyWeather = document.createElement('div');
+// // listItem.textContent = docArray[index].weather;
+// displayWeatherEl.appendChild(dailyWeather);
+// console.log(forecastResponse[index]);
+
+
+
+// fetch(getCurrentWeather)
+// .then(function(response){
+//     //convert to JSON object
+//     return response.json();
+// })
+// .then(function(data) {
+//     //display in HTML here
+
+
 // let saveCities = function() {
 //     localStorage.setItem("cities", JSON.stringify(cities));
 //   };
@@ -68,16 +119,11 @@ function getForecast(lat, lon, cityName) {
         .then(function (data) {
             let cityArray = data.list;
             console.log(cityArray);
-            displayWeather(cityArray, cityName);
+            displayWeather(cityName, cityArray);
             return cityArray;
         })
-}
-// function forecastResponse(cityArray) {
-//     let forecastResponse = cityArray.toString;
-//     console.log('forecastResponse from this other one');
-//     console.log(forecastResponse);
-//     // displayWeather(forecastResponse);
-// }
+};
+
 
 function addCity(cityInput) {
     let listCity = $("<li>")
@@ -106,27 +152,8 @@ function getCurrentWeather(cityInput, lat, lon) {
             lon = data[0].lon;
 
             console.log(cityName);
-            // console.log(lon);
             getForecast(lat, lon, cityName);
-            // getCurrentWeather(cityName);
-            // return currentWeatherUrl;
-            // for (let i = 0; i < data.length; i++) {
-            //     //create a list element
-            //     let cityListItem = $('<li>');
-            //     cityListItem.textContent = data[i].html_url;
-            // .attr('href', getCurrentWeather);
 
-            // cityListItem.addClass("list-group-item list-group-item-action list-group-item-secondary");
-
-            // let listCity = $("<span>")
-            // .addClass('m-1')
-            // .text(cityInput);
-
-            // cityListItem.append(listCity);
-
-            // // append new city to div#city-list in html
-            // cityListEl.append(cityListItem);
-            // // return cityInput;
         })
 };
 

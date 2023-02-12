@@ -21,8 +21,8 @@
     <h1 class="app-title" style="text-align: center"> Weather Dashboard</h1>
   </header>
 
-  <main class="flex-row justify-space-between">
-    <section id="city-search" class="col-12 col-md-5">
+  <main class="flex col-12 justify-space-between">
+    <section id="city-search" class="col-4">
       <div class="card">
         <h3 class="card-header text-uppercase">Search City:</h3>
         <form id="location-form" class="card-body">
@@ -30,7 +30,7 @@
             <input name="city" id="location-input" type="text" autofocus="true" class="form-input form-control"
               placeholder="Denver" />
           </div>
-        
+
 
           <div class="col-12 col-md-9 mx-auto">
             <button type="submit" class="m-3 btn btn-info text-nowrap" role="search">Got Weather?</button>
@@ -42,10 +42,18 @@
       </div>
     </section>
 
-    <section id="render-weather" class="col-12 col-md-7">
+    <section id="render-weather" class="col-8">
 
       <!-- * Daily Weather -->
-      <div id="current-weather"></div>
+      <div id="current-weather" class="box">
+        <div id="today-content">
+          <p id="date" class="daily"></p>
+          <i class="icon"></i>
+          <p id="temp" class="daily"></p>
+          <p id="humidity" class="daily"></p>
+          <p id="wind-speed" class="daily"></p>
+        </div>
+      </div>
 
       <!-- * Weather Card Decks -->
       <div id="5-day-forecast" class="card-deck">
