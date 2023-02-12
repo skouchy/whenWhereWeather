@@ -2,27 +2,28 @@ const locationInputEl = document.querySelector("#location-input");
 const cityListEl = document.getElementById('city-list');
 const citySearchBtn = document.querySelector('.btn');
 
-const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
-
 let cityInput;
 let lon;
 let lat;
 
+const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
+let currentWeatherUrl;
 
-let formSubmitHandler = function (event, cityInput) {
+
+function formSubmitHandler(event, cityInput) {
     event.preventDefault();
     // get value from input element
     cityInput = locationInputEl.value.trim();
 
     if (cityInput) {
         //     locationInputEl.value = "";
-        // addCity(cityInput);
+        addCity(cityInput);
         getCurrentWeather(cityInput);
         console.log(cityInput + " : form handled!")
+        return cityInput;
     } else {
         alert("Please enter a valid City");
     }
-    return cityInput;
 };
 
 
@@ -41,26 +42,27 @@ function getForecast(lat, lon) {
 // function getCurrentWeather(cityInput) {
 //     console.log(cityInput);
 // creating list items dynamically
-// function addCity(cityInput) {
-//     console.log(cityInput);
-//     getCurrentWeather();
-//     let cityWeatherLink = $('<a>').attr('href', getCurrentWeather);
+function addCity(cityInput) {
+    console.log(cityInput);
+    // getCurrentWeather();
+    let listCity = $("<li>")
+        .addClass('m-1')
+        .text(cityInput);
+    let cityWeatherLink = $('<a>').attr('href', currentWeatherUrl);
 
-//     cityWeatherLink.addClass("list-group-item list-group-item-action list-group-item-secondary");
+    listCity.addClass("list-group-item list-group-item-action list-group-item-secondary");
 
-//     let listCity = $("<span>")
-//         .addClass('m-1')
-//         .text(cityInput);
+        
 
-//     cityWeatherLink.append(listCity);
+    listCity.append(cityWeatherLink);
 
-//     // append new city to div#city-list in html
-//     $("#city-list").append(cityWeatherLink);
-//     return cityInput;
-// };
+    // append new city to div#city-list in html
+    $("#city-list").append(listCity);
+    // return cityInput;
+};
+
 function getCurrentWeather(cityInput, lat, lon) {
     let currentWeatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey;
-
     fetch(currentWeatherUrl)
         .then(function (response) {
             console.log(response);
@@ -71,7 +73,8 @@ function getCurrentWeather(cityInput, lat, lon) {
                     
                     // console.log(lat);
                     // console.log(lon);
-                    return getForecast(lat, lon);  
+                    getForecast(lat, lon);
+                    return currentWeatherUrl;
                     // for (let i = 0; i < data.length; i++) {
                     //     //create a list element
                     //     let cityListItem = $('<li>');
