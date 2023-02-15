@@ -1,7 +1,8 @@
 const locationInputEl = document.querySelector("#location-input");
 const cityListEl = document.getElementById('city-list');
 const citySearchBtn = document.querySelector('.btn');
-let displayWeatherEl = document.getElementById('current-weather');
+let displayWeatherEl = document.getElementById('city-name');
+let forecastEl = document.getElementById('5-day-forecast');
 
 let cityInput;
 let lon;
@@ -12,12 +13,11 @@ let currentWeatherUrl;
 
 
 function displayWeather(cityName, cityArray) {
-    let cityHeader = document.createElement('h2');
-    cityHeader.textContent = cityName;
-    displayWeatherEl.append(cityHeader);
+    displayWeatherEl.innerHTML= "";
+    displayWeatherEl.append(cityName);
     
     let renderTodayDate = document.getElementById('date');
-    let renderIcon = document.querySelector('.icon');
+    // let renderIcon = document.querySelector('.icon');
     let renderTodayTemp = document.getElementById('temp');
     let renderTodayHumid = document.getElementById('humidity');
     let renderTodayWind = document.getElementById('wind-speed');
@@ -29,19 +29,21 @@ function displayWeather(cityName, cityArray) {
             icon: cityArray[i].weather[0].icon,
             temp: cityArray[i].main.temp,
             humid: cityArray[i].main.humidity,
-            wind: cityArray[i].wind.speed,
+            wind: cityArray[i].wind.speed,    
             
         }
-        // return weatherObj;
-        renderTodayDate.innerHTML = weatherObj.date;
-        renderTodayTemp.innerHTML = weatherObj.temp;
-        renderTodayHumid.innerHTML = weatherObj.humid;
-        renderTodayWind.innerHTML = weatherObj.wind;
+
+        if(i===0){
+        renderTodayDate.innerHTML = "Date:  " + weatherObj.date;
+        renderTodayTemp.innerHTML = "Temperature:  " + weatherObj.temp;
+        renderTodayHumid.innerHTML = "Humidity:  " + weatherObj.humid;
+        renderTodayWind.innerHTML = "Wind Speed:  " + weatherObj.wind;
+        }
         
         // getIcon(weatherObj.icon)
-        return
+        // return
+        console.log(weatherObj.date);
     }
-    
 };
 // weatherObj.icon = 
 
