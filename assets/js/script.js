@@ -13,36 +13,64 @@ let currentWeatherUrl;
 
 
 function displayWeather(cityName, cityArray) {
-    displayWeatherEl.innerHTML= "";
+    displayWeatherEl.innerHTML = "";
     displayWeatherEl.append(cityName);
-    
+
     let renderTodayDate = document.getElementById('date');
-    // let renderIcon = document.querySelector('.icon');
+    let renderIcon = document.querySelector('.icon');
     let renderTodayTemp = document.getElementById('temp');
     let renderTodayHumid = document.getElementById('humidity');
     let renderTodayWind = document.getElementById('wind-speed');
-    
-    
-    for (let i = 0; i < cityArray.length; i += 7) {
+
+
+    for (let i = 0; i < cityArray.length; i += 8) {
+        let weatherOfIndex = cityArray[i];
         let weatherObj = {
-            date: cityArray[i].dt_txt.split(' ')[0],
-            icon: cityArray[i].weather[0].icon,
-            temp: cityArray[i].main.temp,
-            humid: cityArray[i].main.humidity,
-            wind: cityArray[i].wind.speed,    
-            
+            date: weatherOfIndex.dt_txt.split(' ')[0],
+            icon: weatherOfIndex.weather[0].icon,
+            temp: weatherOfIndex.main.temp,
+            humid: weatherOfIndex.main.humidity,
+            wind: weatherOfIndex.wind.speed,
+
         }
 
-        if(i===0){
-        renderTodayDate.innerHTML = "Date:  " + weatherObj.date;
-        renderTodayTemp.innerHTML = "Temperature:  " + weatherObj.temp;
-        renderTodayHumid.innerHTML = "Humidity:  " + weatherObj.humid;
-        renderTodayWind.innerHTML = "Wind Speed:  " + weatherObj.wind;
-        }
-        
-        // getIcon(weatherObj.icon)
-        // return
+        console.log(weatherOfIndex);
         console.log(weatherObj.date);
+        console.log(Date());
+
+        if (i === 0) {
+            renderTodayDate.innerHTML = weatherObj.date;
+            renderTodayTemp.innerHTML = "Temperature:  " + weatherObj.temp;
+            renderIcon.innerHTML = weatherObj.icon;
+            renderTodayHumid.innerHTML = "Humidity:  " + weatherObj.humid + "%";
+            renderTodayWind.innerHTML = "Wind Speed:  " + weatherObj.wind + "mph";
+        }
+
+        let cardEl = document.createElement('div');
+        cardEl.setAttribute('class', 'card');
+        let forecastCard = document.createElement('ul');
+        forecastCard.setAttribute('class', 'card-body');
+
+        let foreCastData = [
+            document.createElement('li'),
+            document.createElement('li'),
+            document.createElement('li'),
+            document.createElement('li'),
+            document.createElement('li'),
+        ]
+        
+        
+        foreCastData[0].innerHTML = (weatherObj.date);
+        foreCastData[1].innerHTML = ('icon: ' + weatherObj.icon);
+        foreCastData[2].innerHTML = ('Temperature: ' + weatherObj.temp);
+        foreCastData[3].innerHTML = ('Wind: ' + weatherObj.wind + "mph");
+        foreCastData[4].innerHTML = ('Humidity: ' + weatherObj.humid + "%");
+    
+        forecastCard.append(...foreCastData);
+        cardEl.appendChild(forecastCard);
+        forecastEl.appendChild(cardEl);
+
+        console.log('sahhh forecast');
     }
 };
 // weatherObj.icon = 
