@@ -1,5 +1,4 @@
-const locationInputEl = document.querySelector("#location-input");
-const cityListEl = document.getElementById('city-list');
+let cityInputEl = document.querySelector("#city-input");
 const citySearchBtn = document.querySelector('.btn');
 let displayWeatherEl = document.getElementById('city-name');
 let forecastEl = document.getElementById('5-day-forecast');
@@ -12,7 +11,7 @@ const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
 let currentWeatherUrl;
 
 
-function displayWeather(cityName, cityArray) {
+function displayWeather(cityName, weatherDataArr) {
     displayWeatherEl.innerHTML = "";
     displayWeatherEl.append(cityName);
 
@@ -22,9 +21,9 @@ function displayWeather(cityName, cityArray) {
     let renderTodayHumid = document.getElementById('humidity');
     let renderTodayWind = document.getElementById('wind-speed');
 
-
-    for (let i = 0; i < cityArray.length; i += 8) {
-        let weatherOfIndex = cityArray[i];
+    // * Setting Weather Data into single day Object based on 3hr forecast of Array(40)
+    for (let i = 0; i < weatherDataArr.length; i += 8) {
+        let weatherOfIndex = weatherDataArr[i];
         let weatherObj = {
             date: weatherOfIndex.dt_txt.split(' ')[0],
             icon: weatherOfIndex.weather[0].icon,
@@ -34,102 +33,60 @@ function displayWeather(cityName, cityArray) {
 
         }
 
-        console.log(weatherOfIndex);
-        console.log(weatherObj.date);
-        console.log(Date());
+        // * Weather Icon Image
+        let weatherIconURL = "https://openweathermap.org/img/wn/" + weatherOfIndex.weather[0].icon + ".png";
 
         if (i === 0) {
             renderTodayDate.innerHTML = weatherObj.date;
             renderTodayTemp.innerHTML = "Temperature:  " + weatherObj.temp;
-            renderIcon.innerHTML = weatherObj.icon;
+            renderIcon.innerHTML = renderIcon.setAttribute('src', weatherIconURL);
             renderTodayHumid.innerHTML = "Humidity:  " + weatherObj.humid + "%";
             renderTodayWind.innerHTML = "Wind Speed:  " + weatherObj.wind + "mph";
         }
 
+
+        // * Creating Forecast Elements Dynamically
+        let forecastData = [
+            $('<li>'),
+            $('<li>'),
+            $('<li>'),
+            $('<li>'),
+        ]
+
+        forecastData[0].innerHTML = weatherObj.date;
+        forecastData[1].innerHTML = ('Temp: ' + weatherObj.temp);
+        forecastData[2].innerHTML = ('Wind: ' + weatherObj.wind + "mph");
+        forecastData[3].innerHTML = ('Humidity: ' + weatherObj.humid + "%");
+
+
+        let cardImage = document.createElement('img');
+        cardImage.setAttribute('class', 'card-img-top');
+        cardImage.setAttribute('src', weatherIconURL);
+
         let cardEl = document.createElement('div');
         cardEl.setAttribute('class', 'card');
+        cardEl.appendChild(cardImage);
+
         let forecastCard = document.createElement('ul');
         forecastCard.setAttribute('class', 'card-body');
-
-        let foreCastData = [
-            document.createElement('li'),
-            document.createElement('li'),
-            document.createElement('li'),
-            document.createElement('li'),
-            document.createElement('li'),
-        ]
-        
-        
-        foreCastData[0].innerHTML = (weatherObj.date);
-        foreCastData[1].innerHTML = ('icon: ' + weatherObj.icon);
-        foreCastData[2].innerHTML = ('Temperature: ' + weatherObj.temp);
-        foreCastData[3].innerHTML = ('Wind: ' + weatherObj.wind + "mph");
-        foreCastData[4].innerHTML = ('Humidity: ' + weatherObj.humid + "%");
-    
-        forecastCard.append(...foreCastData);
         cardEl.appendChild(forecastCard);
+        forecastCard.append(...forecastData);
+
         forecastEl.appendChild(cardEl);
 
         console.log('sahhh forecast');
     }
 };
-// weatherObj.icon = 
 
+function addCity(cityInput) {
+    var cityLi = $('<button>').attr('type', 'data').text(cityInput);
 
-// function getIcon(weatherObj) {
-//     let iconUrl = "https://openweathermap.org/img/wn/" + weatherObj.icon + "@2x.png";
-//     fetch(iconUrl)
-//         .then(function (response) {
-//             // if (!response.ok) {
-//             //     alert("dang, no cartoons");
-//             //     throw response.json();
-//             // }
-//             console.log(response);
-//             return response.json();
-//         })
-//         .then(function (data) {
-//             console.log(data);
-
-//         })
-// };
-
-// let formatDate = date[1] + "/" + date[2] + "/" + date[0];
-
-// date[0] = renderTodayDate.innerHTML;
-// // dailyContent.appendChild(formatDate);
-
-
-// let temp = ;
-// temp.textContent = dailyText.innerHTML;
-// dailyContent.appendChild(dailyText);
-// console.log(dailyContent + 'p2');
-// dailyText.textContent.appendSibling()
-
-
-// console.log(date);
-
-// let dailyWeather = document.createElement('div');
-// // listItem.textContent = docArray[index].weather;
-// displayWeatherEl.appendChild(dailyWeather);
-// console.log(forecastResponse[index]);
-
-
-
-// fetch(getCurrentWeather)
-// .then(function(response){
-//     //convert to JSON object
-//     return response.json();
-// })
-// .then(function(data) {
-//     //display in HTML here
-
-
-// let saveCities = function() {
-//     localStorage.setItem("cities", JSON.stringify(cities));
-//   };
-// function forecastResponse(cityArray) {
-//     cityArray = JSON.parse(localStorage.getItem("cities"));
-// displayWeather(forecastResponse);
+    cityLi.on('click', function () {
+        getGeoCoord(cityInput);
+    });
+    
+    $('#city-list').append(cityLi);
+};
 
 // *FETCH 
 function getForecast(lat, lon, cityName) {
@@ -138,46 +95,37 @@ function getForecast(lat, lon, cityName) {
     fetch(fiveDayUrl)
         .then(function (response) {
             if (!response.ok) {
-                alert('dis sum 5day bullshit');
                 throw response.json();
             }
-
-            console.log(response);
+            currentWeatherUrl = response.url;
+            console.log(response.url);
             return response.json();
         })
 
         .then(function (data) {
-            let cityArray = data.list;
-            console.log(cityArray);
-            displayWeather(cityName, cityArray);
-            return cityArray;
+            console.log(data);
+            let weatherDataArr = data.list;
+            console.log(weatherDataArr);
+            displayWeather(cityName, weatherDataArr);
+            return cityName, weatherDataArr;
         })
+
 };
 
 
-function addCity(cityInput) {
-    let listCity = $("<li>")
-        .addClass('list-group-item list-group-item-action list-group-item-secondary')
-        .text(cityInput);
-    // let cityWeatherLink = $('<a>').attr('href', currentWeatherUrl);
 
-    // append new city to div#city-list in html
-    $("#city-list").append(listCity);
-};
-
-function getCurrentWeather(cityInput, lat, lon) {
-    let currentWeatherUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&appid=" + apiKey;
-    fetch(currentWeatherUrl)
+function getGeoCoord(cityInput, lat, lon) {
+    let getGeoUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&appid=" + apiKey;
+    fetch(getGeoUrl)
         .then(function (response) {
             if (!response.ok) {
-                alert('dis sum bullshit');
                 throw response.json();
             }
             return response.json();
         })
 
         .then(function (data) {
-            cityName = data[0].name + ", " + data[0].state;
+            let cityName = data[0].name + ", " + data[0].state;
             lat = data[0].lat;
             lon = data[0].lon;
 
@@ -189,48 +137,21 @@ function getCurrentWeather(cityInput, lat, lon) {
 
 function formSubmitHandler(event, cityInput) {
     event.preventDefault();
-    // get value from input element
-    cityInput = locationInputEl.value.trim();
+    cityInput = cityInputEl.value.trim();
 
     if (!cityInput) {
         alert("Please enter a valid City");
         return;
     }
-    //     locationInputEl.value = "";
-    addCity(cityInput);
-    getCurrentWeather(cityInput);
-    console.log(cityInput + " : form handled!");
+    addCity(cityInput); //Sending text format for search City history
+
+    cityInputEl.value = "";
+    getGeoCoord(cityInput);
 }
-
-//** */ });
-
-
-//   <li class="list-group-item">An item</li>
-/* <span class="badge bg-secondary">New</span> */
-{/* <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">A simple secondary list group item</a> */ }
-
-
-//* creating dynamic elements
-// let text = $(this)
-//  .text()
-//  .trim();
-
-//  let textInput = $("<textarea>")
-//   .addClass("form-control")
-//   .val(text);
-
-// $(this).replaceWith(textInput);
-
-
-//==============================================
-// * LOCALSTORAGE
-
-
 
 
 //===============================================
 // * EVENT LISTENER
 
-// render(locationInputEl.attr(placeholder));
 citySearchBtn.addEventListener("click", formSubmitHandler);
-// listCity.addEventListener('click', currentWeatherUrl)
+

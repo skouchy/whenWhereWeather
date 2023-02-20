@@ -8,9 +8,9 @@
     --border-radius: .3rem;
   }
   
-  * {
+  /* * {
     box-sizing: border-box;
-  }
+  } */
   
   body {
     background: linear-gradient(135deg,  #002400 5%,#005700 32%,#005700 32%,#005700 34%,#008a00 56%,#52b152 77%,#83c783 88%,#b4ddb4 100%);
@@ -40,8 +40,14 @@
   .hstack {
 
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     align-self: stretch;
   }
+  
+li {
+  list-style-type: none;
+  margin: 0%;
+}
 
