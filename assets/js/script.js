@@ -49,10 +49,10 @@ function displayWeather(cityName, weatherDataArr) {
 
         // * Creating Forecast Elements Dynamically
         let forecastData = [
-            $('<li>'),
-            $('<li>'),
-            $('<li>'),
-            $('<li>'),
+            document.createElement('li'),
+            document.createElement('li'),
+            document.createElement('li'),
+            document.createElement('li'),
         ]
 
         forecastData[0].innerHTML = weatherObj.date;
