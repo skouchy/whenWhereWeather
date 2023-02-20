@@ -10,6 +10,8 @@ let lat;
 const apiKey = '8f2f373cdd243b84ebc3cb3c2f92118f';
 let currentWeatherUrl;
 
+// ================================================
+// * Render Data to Page 
 
 function displayWeather(cityName, weatherDataArr) {
     displayWeatherEl.innerHTML = "";
@@ -74,9 +76,11 @@ function displayWeather(cityName, weatherDataArr) {
 
         forecastEl.appendChild(cardEl);
 
-        console.log('sahhh forecast');
     }
 };
+
+// ====================================================
+// * Add City Search History List
 
 function addCity(cityInput) {
     var cityLi = $('<button>').attr('type', 'data').text(cityInput);
@@ -88,7 +92,9 @@ function addCity(cityInput) {
     $('#city-list').append(cityLi);
 };
 
-// *FETCH 
+// ======================================================
+// * FETCH 
+
 function getForecast(lat, lon, cityName) {
     let fiveDayUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
     console.log('lat : ' + lat, 'lon : ' + lon);
@@ -98,14 +104,11 @@ function getForecast(lat, lon, cityName) {
                 throw response.json();
             }
             currentWeatherUrl = response.url;
-            console.log(response.url);
             return response.json();
         })
 
         .then(function (data) {
-            console.log(data);
             let weatherDataArr = data.list;
-            console.log(weatherDataArr);
             displayWeather(cityName, weatherDataArr);
             return cityName, weatherDataArr;
         })
@@ -129,11 +132,13 @@ function getGeoCoord(cityInput, lat, lon) {
             lat = data[0].lat;
             lon = data[0].lon;
 
-            console.log(cityName);
             getForecast(lat, lon, cityName);
 
         })
 };
+
+//============================================
+// * Form Input
 
 function formSubmitHandler(event, cityInput) {
     event.preventDefault();
