@@ -15,6 +15,7 @@ let currentWeatherUrl;
 
 function displayWeather(cityName, weatherDataArr) {
     displayWeatherEl.innerHTML = "";
+    forecastEl.innerHTML= "";
     displayWeatherEl.append(cityName);
 
     let renderTodayDate = document.getElementById('date');
