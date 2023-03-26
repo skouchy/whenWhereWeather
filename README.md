@@ -16,4 +16,6 @@ https://github.com/skouchy/whenWhereWeather
 https://skouchy.github.io/whenWhereWeather/
 
 ### Screenshot
-![10 0 0 100_5501_index html (1)](https://user-images.githubusercontent.com/119292219/221758992-bd508698-095d-4f31-b813-20ae496bc672.png)
+![weather_dashboard][def]
+
+[def]: https://user-images.githubusercontent.com/119292219/221758992-bd508698-095d-4f31-b813-20ae496bc672.png
