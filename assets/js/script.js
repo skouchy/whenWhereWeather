@@ -119,7 +119,7 @@ function getForecast(lat, lon, cityName) {
 
 
 function getGeoCoord(cityInput, lat, lon) {
-    let getGeoUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&appid=" + apiKey;
+    let getGeoUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&appid=" + apiKey;
     fetch(getGeoUrl)
         .then(function (response) {
             if (!response.ok) {
