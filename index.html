@@ -11,7 +11,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
   <title>When Where Weather</title>
 
 </head>
@@ -27,7 +27,7 @@
       <div class="card bg-secondary">
 
         <form id="location-form" class="card-body">
-          <div id="city-search" class="form">
+          <div id="city-search" aria-label="city-name-search-form" class="form">
             <label for="city-search" class="form-label">
               <h4 class="header text-uppercase">Search City:</h4>
             </label>
@@ -36,7 +36,7 @@
 
 
           <div class="py-3">
-            <button type="submit" class="btn btn-info" role="search">Got Weather?</button>
+            <button type="submit" aria-label="search-for-city-weather-button" class="btn btn-info" role="search">Got Weather?</button>
           </div>
         </form>
       </div>
@@ -51,9 +51,9 @@
         <h2 id="city-name" class="header"></h2>
 
         <!-- * Daily Weather -->
-        <div id="today-content">
+        <div id="today-content" style="color:gold">
           <p id="date" class="daily"></p>
-          <img class="icon"></img>
+          <img class="icon" aria-label="weather-icon-clipart"></img>
           <p id="temp" class="daily"></p>
           <p id="humidity" class="daily"></p>
           <p id="wind-speed" class="daily"></p>
@@ -66,7 +66,7 @@
 
   </main>
 
-  <footer style="text-align: center;">
+  <footer style="text-align: center; color:aliceblue">
     &copy;skouchy 2023
   </footer>
 

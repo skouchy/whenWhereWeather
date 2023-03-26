@@ -21,6 +21,11 @@
     font-size: 16px;
   }
   
+/* main,
+footer {
+  font-style: var(--primary);
+} */
+
   h1,
   h2,
   h3,
