@@ -1,0 +1,21 @@
+{
+  "name": "whenwhereweatherapp",
+  "version": "1.0.0",
+  "description": "Search a city, get today's weather with a 5 day forecast included. ## Description A simply designed weather app that allows you to search the weather for any city of your choice! Not only do you get to view today's weather, but you also get a look ahead with a 5 day forecast for that city. We've even added cute little icons that give you a quick idea of whether(no pun intended) it will be sunny, windy, snowing, and more for convenient viewing without the need to read or do math to convert your universal temps! Once you've searched a city, a list of your city search history is created. Want to go back to view that city's weather again? No prob, Bob! Simply click the name of the city you had previously searched (in that nifty and easy-to-use dynamically generated list), and BOOM POW! There is the weather for that same city, again. You're welcome :)",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skouchy/whenWhereWeather.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skouchy/whenWhereWeather/issues"
+  },
+  "homepage": "https://github.com/skouchy/whenWhereWeather#readme"
+}
